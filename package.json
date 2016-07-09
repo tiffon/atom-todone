@@ -1,0 +1,23 @@
+{
+  "name": "atom-todone",
+  "version": "0.0.0",
+  "description": "A short description of your language package",
+  "keywords": [
+    "todo",
+    "tasks",
+    "productivity"
+  ],
+  "activationHooks": [
+    "todone:grammar-used"
+  ],
+  "repository": "https://github.com/tiffon/atom-todone",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "main": "lib/main.js",
+  "devDependencies": {
+    "dot": "^1.0.3",
+    "js-yaml": "^3.6.1"
+  }
+}

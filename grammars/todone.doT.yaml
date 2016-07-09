@@ -1,0 +1,272 @@
+name: ToDone
+fileTypes:
+    - todo
+    - todone
+scopeName: text.todone
+patterns:
+    -
+        include: '#everything'
+repository:
+    everything:
+        patterns:
+            -
+                include: '#complete'
+            -
+                include: '#ignore'
+            -
+                include: '#task-class'
+            -
+                include: '#lvl-disaster'
+            -
+                include: '#lvl-0'
+            -
+                include: '#lvl-1'
+            -
+                include: '#lvl-2'
+            -
+                include: '#lvl-3'
+            -
+                include: '#lvl-4'
+            -
+                include: '#lvl-5'
+            -
+                include: '#label-1'
+            -
+                include: '#label-2'
+            -
+                include: '#label-3'
+            -
+                include: '#label-4'
+            -
+                include: '#label-5'
+            -
+                include: '#note'
+    note:
+        name: storage.task-note.todone
+        begin: (?=.)
+        end: $
+        patterns:
+            -
+                include: '#note-em'
+            -
+                include: '#raw-note'
+    note-em:
+        name: storage.task-note.em.todone
+        match: (`|"|')(?:(?!\1).)*(\1)
+        captures:
+            '1':
+                name: punctuation.definition.note.em.begin.todone
+            '2':
+                name: punctuation.definition.note.em.end.todone
+    raw-note:
+        name: storage.task-note.raw.todone
+        begin: \|\+
+        beginCaptures:
+            '0':
+                name: punctuation.definition.note.raw.begin.todone
+        end: \|\.
+        endCaptures:
+            '0':
+                name: punctuation.definition.note.raw.end.todone
+        patterns:
+            -
+                include: '#note-em'
+            -
+                match: |
+                    ((?!\|\.)[^`"'])+
+    task-over-raw-note:
+        begin: ///
+        end: ///
+        patterns:
+            -
+                begin: '`'
+                end: '`'
+                patterns:
+                    -
+                        match: \\`
+    complete:
+        begin: ^(\s*)(\+!?)((?:\:|\-)+\d?)(.*)$
+        beginCaptures:
+            '2':
+                name: keyword.operator.completed.todone
+            '3':
+                name: keyword.operator.completed.secondary.todone
+            '4':
+                name: storage.type.task.content.completed.todone
+        end: '^(?!\1)|^\s*$|^(?=\1[^\s])'
+        patterns:
+            -
+                name: storage.type.task.completed.todone
+                begin: (?=.)
+                end: $
+                patterns:
+                    -
+                        name: storage.type.task.completed.secondary.todone
+                        begin: ^\s+(\+)?(\.)?(!?(?:\:|\-)+\d?)
+                        beginCaptures:
+                            '1':
+                                name: keyword.operator.completed.secondary.todone
+                            '3':
+                                name: keyword.operator.completed.secondary.todone
+                        end: .*$
+                    -
+                        include: '#everything'
+    ignore:
+        begin: '^(\s*)(\.)(\+?!?\-+[12345]?)\s*(?:(\()([^\)]+)(\)))?(.*)$'
+        beginCaptures:
+            '2':
+                name: keyword.operator.ignore.todone
+            '3':
+                name: keyword.operator.ignore.secondary.todone
+            '4':
+                name: keyword.operator.ignore.punctuation.desc.todone
+            '5':
+                name: keyword.operator.ignore.desc.todone
+            '6':
+                name: keyword.operator.ignore.punctuation.desc.todone
+            '7':
+                name: storage.type.task.content.ignore.todone
+        end: ^(?!\1)|^\s*$|^(?=\1\S)
+        patterns:
+            -
+                name: storage.type.task.ignore.todone
+                begin: (?=.)
+                end: $
+                patterns:
+                    -
+                        name: storage.type.task.ignore.secondary.todone
+                        begin: ^\s+(\+)?(\.)?(!?\-+\d?)
+                        beginCaptures:
+                            '0':
+                                '--name': keyword.operator.ignore.secondary.todone
+                        end: .*$
+                        endCaptures:
+                            '0':
+                                '--name': storage.type.task.ignore.secondary.todone
+                    -
+                        include: '#everything'
+    task-class:
+        patterns:
+            -
+                name: entity.name.class.todone
+                begin: \/\*
+                beginCaptures:
+                    '0':
+                        name: punctuation.definition.class-block.todone
+                end: \*\/
+                endCaptures:
+                    '0':
+                        name: punctuation.definition.class-block.todone
+            -
+                name: entity.name.class.todone
+                begin: ^##
+                beginCaptures:
+                    '0':
+                        name: punctuation.definition.class-block.todone
+                end: '^##'
+                endCaptures:
+                    '0':
+                        name: punctuation.definition.class-block.todone
+            -
+                name: entity.name.class.todone
+                match: '^#.*$'
+    lvl-disaster:
+        name: meta.condition.disaster.todone
+        begin: |
+            (?x)
+            (\s*)
+            (!)
+            (?:
+                {{~ [1,2,3,4,5] :value}}
+                    (\-{{{= value }}}|\-({{= value }}))
+                    \s+((?:://|/(?!//)|[^:\n/])*:?)
+                    {{= value < 5 ? '|' : '' }}
+                {{~}}
+            )
+        beginCaptures:
+            '0':
+                name: symbol.definition.task-heading.todone
+            '2':
+                name: punctuation.definition.disaster.begin.todone
+            {{~ [1,2,3,4,5] :i}}
+            '{{= 3 * i + 3 }}': {name: keyword.operator.task.lvl{{= i + 1 }}.todone}
+            '{{= 3 * i + 4 }}': {name: keyword.operator.task.numeral.lvl{{= i + 1 }}.todone}
+            '{{= 3 * i + 5 }}': {name: entity.name.task.lvl{{= i + 1 }}.todone}
+            {{~}}
+        end: '^(?!\1\s)|^(?=\s*\n)|^(?=\1[^\s])'
+        endCaptures:
+            '0':
+                name: punctuation.definition.class-block.todone
+        patterns:
+            -
+                include: '#everything'
+    {{~ [1,2,3,4,5] :i}}
+    lvl-{{= i }}:
+        name: storage.type.task.todone
+        begin: |
+            (?x)
+            (\s*)
+            (\-{{{= i}}}|\-({{= i }}))
+            \s+
+            ([^|\n]*)
+        beginCaptures:
+            '0': {name: symbol.definition.task-heading.todone}
+            '2': {name: keyword.operator.task.lvl{{= i }}.todone}
+            '3': {name: keyword.operator.task.numeral.lvl{{= i }}.todone}
+            '4': {name: entity.name.task.lvl{{= i }}.todone}
+        end: ^(?!\1)|^(?=\s*\n)|^(?=\1[^\s])
+        patterns:
+            - include: '#everything'
+    {{~}}
+
+    {{~ [1,2,3,4,5] :i}}
+    label-{{= i }}:
+        name: storage.type.task.todone
+        begin: |
+            (?x)
+            (\s*)
+            (:{{{= i }}}|:({{= i }}))
+            \s+
+            (?:
+                ([^:(|]*)
+                (?:
+                    (\()
+                    ([^)]*)
+                    (\))
+                )?
+            )
+            \s*
+            (?:
+                ([^:(|]*)
+                (?:
+                    (\()
+                    ([^)]*)
+                    (\))
+                )?
+            )
+            \s*
+            (?:
+                (:)
+                ([^|]*)
+            )?
+        beginCaptures:
+            '0': {name: symbol.definition.label-heading.todone}
+            '2': {name: keyword.operator.label.lvl{{= i }}.todone}
+            '3': {name: keyword.operator.label.numeral.lvl{{= i }}.todone}
+
+            '4': {name: entity.name.task.label{{= i }}.todone}
+            '5': {name: punctuation.definition.label-detail.begin.todone}
+            '6': {name: entity.name.task.label-detail{{= i }}.todone}
+            '7': {name: punctuation.definition.label-detail.end.todone}
+
+            '8': {name: entity.name.task.label{{= i }}.todone}
+            '9': {name: punctuation.definition.label-detail.begin.todone}
+            '10': {name: entity.name.task.label-detail{{= i }}.todone}
+            '11': {name: punctuation.definition.label-detail.end.todone}
+
+            '12': {name: punctuation.definition.label-message.begin.todone}
+            '13': {name: entity.name.task.label-message{{= i }}.todone}
+        end: ^(?!\1)|^(?=\s*\n)|^(?=\1[^\s])
+        patterns:
+            - include: '#everything'
+    {{~}}

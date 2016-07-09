@@ -1,0 +1,208 @@
+@import "ui-variables";
+
+
+
+
+// // Config -----------------------------------
+// @syntax-hue:          220;
+// @syntax-saturation:   24%;
+// @syntax-brightness:   20%;
+
+// Base colors -----------------------------------
+// @syntax-base-accent-color:      hsl(@syntax-hue, 100%, 66% );
+// @syntax-base-background-color:  #272822;
+// @syntax-base-text-color:        #F8F8F2;
+// @syntax-base-guide-color:       fade(@syntax-base-text-color, 15%);
+
+
+// // Colors: Mix Base16 Tomorrow with Theme hue -----------------------------------
+// @syntax-mix-base:       hsl(@syntax-hue, 100%, 66%);
+// @syntax-mix-grey:       12%;
+// @syntax-mix-color:      0%;
+//
+// @very-light-gray: mix( @syntax-mix-base, hsl(0,0%,84%), @syntax-mix-grey);
+// @light-gray:      mix( @syntax-mix-base, hsl(0,0%,72%), @syntax-mix-grey);
+// @gray:            mix( @syntax-mix-base, hsl(0,0%,54%), @syntax-mix-grey);
+// @dark-gray:       mix( @syntax-mix-base, hsl(0,0%,36%), @syntax-mix-grey);
+// @very-dark-gray:  mix( @syntax-mix-base, hsl(0,0%,18%), @syntax-mix-grey);
+//
+// @cyan:            mix( @syntax-mix-base, #57B6C2, @syntax-mix-color);
+// @blue:            mix( @syntax-mix-base, #61AEEF, @syntax-mix-color);
+// @purple:          mix( @syntax-mix-base, #C679DD, @syntax-mix-color);
+// @green:           mix( @syntax-mix-base, #97C378, @syntax-mix-color);
+// @red:             mix( @syntax-mix-base, #DF6A73, @syntax-mix-color);
+// @dark-red:        mix( @syntax-mix-base, #BE4F44, @syntax-mix-color);
+// @orange:          mix( @syntax-mix-base, #D29B67, @syntax-mix-color);
+// @light-orange:    mix( @syntax-mix-base, #E5C17C, @syntax-mix-color);
+// @bright-orange:   mix( @syntax-mix-base, #FF8000, @syntax-mix-color);
+
+
+
+:host,
+atom-text-editor,
+atom-text-editor::shadow {
+
+    background-color: #272822;
+
+
+    .text.todone {
+
+        color: #ccc;
+
+        .entity.name.class.todone {
+            color: #66D9EF;
+        }
+
+        .punctuation.definition.class-block.todone {
+            color: #505050;
+        }
+
+        .keyword.operator.completed.todone {
+            color: #53e442;
+        }
+
+        .keyword.operator.completed.secondary.todone {
+            color: #345d3d;
+        }
+        .storage.type.task.completed.todone .storage.task-note.todone {
+            color: #444;
+        }
+
+        .keyword.operator.ignore.todone {
+            color: #c06030;
+        }
+
+        .keyword.operator.ignore.secondary.todone {
+            color: #c06030;
+            opacity: 0.23;
+        }
+
+        .keyword.operator.ignore.desc.todone {
+            color: #904f31;
+        }
+
+        .keyword.operator.ignore.punctuation.desc.todone {
+            color: #c06030;
+            opacity: 0.23;
+        }
+
+        .keyword.operator.ignore.secondary.todone {
+            color: #c0603044;
+        }
+
+        .punctuation.definition.disaster.begin.todone {
+            font-weight: bold;
+            background: #f04;
+            color: #fff;
+        }
+
+        .meta.condition.disaster.todone {
+            background: rgba(0,0,0,0.3);
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+
+        .storage.type.task {
+            color: #ccc;
+        }
+
+        .storage.type.task.completed.todone,
+        .storage.type.task.ignore.todone {
+            color: #444;
+        }
+
+        .storage.task-note.em {
+            color: #904f31;
+        }
+
+        .storage.task-note.em.comment.todone {
+            font-style: italic;
+            color: #ccc;
+        }
+
+        .storage.task-note {
+            color: #565752;
+        }
+
+        .punctuation.definition.note {
+            color: #505050;
+        }
+
+        .keyword.operator.task,
+        .keyword.operator.label {
+            color: #3a3a3a;
+        }
+
+        .keyword.operator.task.numeral {
+            color: #3a3a3a;
+        }
+
+        // lvl 1
+        .entity.name.task.lvl1.todone,
+        .entity.name.task.label1.todone {
+            color: #bbb;
+        }
+
+        .entity.name.task.label-message1.todone {
+            color: #999;
+        }
+
+        // lvl 2
+        .entity.name.task.lvl2.todone,
+        .entity.name.task.label2.todone {
+            color: #97c17a;
+        }
+        .entity.name.task.label-message2.todone {
+            color: #6d895d;
+        }
+
+        // lvl 3
+        .entity.name.task.lvl3.todone,
+        .entity.name.task.label3.todone {
+            color: #ae81ff;
+        }
+        .entity.name.task.label-message3.todone {
+            color: #8466a6;
+        }
+
+        // lvl 4
+        .entity.name.task.lvl4.todone,
+        .entity.name.task.label4.todone,
+        .entity.name.task.label-message4.todone {
+            color: #ffeb3f;
+        }
+        .entity.name.task.label-message4.todone {
+            color: #b5af3b;
+        }
+
+        // lvl 5
+        .keyword.operator.task.lvl5.todone {
+            font-weight: bold;
+            color: #f92672;
+        }
+
+        .entity.name.task.lvl5.todone,
+        .entity.name.task.label5.todone,
+        .entity.name.task.label-message5.todone {
+            background: #f92672;
+            color: #fff;
+            opacity: 0.46;
+        }
+
+        .punctuation.definition.label-detail.todone,
+        .punctuation.definition.label-message.begin.todone {
+            color: #444;
+        }
+
+        .entity.name.task.label-detail1.todone,
+        .entity.name.task.label-detail2.todone,
+        .entity.name.task.label-detail3.todone,
+        .entity.name.task.label-detail4.todone,
+        .entity.name.task.label-detail5.todone {
+            color: #904f31;
+        }
+
+
+    }
+}

@@ -1,0 +1,24 @@
+#! /usr/bin/env node
+
+const yaml = require('js-yaml');
+const fs = require('fs');
+const doT = require('dot');
+
+// Get document, or throw exception on error
+try {
+    doT.templateSettings.strip = false;
+    const raw = fs.readFileSync('todone.doT.yaml', 'utf8');
+    const tmpl = doT.template(raw);
+    const tmplOut = tmpl({});
+    const doc = yaml.safeLoad(tmplOut);
+    const opts = {
+        indent: 4,
+        lineWidth: 200
+    }
+    const yamlVersion = yaml.safeDump(doc, opts);
+    fs.writeFileSync('todone.yaml', yamlVersion);
+    const grammar = JSON.stringify(doc, null, 4);
+    fs.writeFileSync('todone.json', grammar);
+} catch (e) {
+    console.log(e);
+}
